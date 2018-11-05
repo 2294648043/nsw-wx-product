@@ -1,0 +1,63 @@
+#指定注册中心地址
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+
+
+spring:
+  #    thymeleaf:
+  #      prefix: classpath:/templates/
+  #      suffix: .html
+  #      cache: false
+  #      servlet:
+  #        content-type: text/html
+  #      enabled: true
+  #
+  #      encoding: UTF-8
+  #      mode: HTML5
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=aaaa
+    username: sa
+    password: 123456
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  application:
+    name: product-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+
+
+#    cloud:
+#        config:
+#          discovery:
+#            service-id: CONFIG-SERVER
+#            enabled: true
+#          profile: test
+
+
+## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+mybatis:
+  mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.nsw.wx.product.pojo
+server:
+  port: 9090 # 注意：对应实体类的路径
+
+
+
+
+
+
+#  #指定从哪个配置中心读取
+#  cloud:
+#    config:
+#      discovery:
+#        service-id: CONFIG-SERVER
+#        enabled: true
+#      profile: test
