@@ -35,7 +35,7 @@ public interface WeChatProductColumnService {
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Integer id,String photopath);
 
 
     /**

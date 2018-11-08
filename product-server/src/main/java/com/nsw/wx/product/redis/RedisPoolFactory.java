@@ -1,4 +1,4 @@
-package com.nsw.wx.user.redis;
+package com.nsw.wx.product.redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

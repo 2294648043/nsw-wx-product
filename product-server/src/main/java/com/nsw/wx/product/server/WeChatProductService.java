@@ -120,22 +120,22 @@ public interface WeChatProductService {
      */
     List<TbWeChatProduct> isBestlist();
 
-    /**
-     * 用户添加购物产品
-     * openid:用户id
-     * id：产品id
-     * num：产品数量
-     * @param
-     * @return
-     */
-    int UseraddTbWeChatProduct(int openid ,int id,String num);
+//    /**
+//     * 用户添加购物产品
+//     * openid:用户id
+//     * id：产品id
+//     * num：产品数量
+//     * @param
+//     * @return
+//     */
+//    int UseraddTbWeChatProduct(String openid ,int id,String num);
 
-    /**（用户）
-     * 根据openid查询商品（购物车）
-     * @param
-     * @return
-     */
-    List<TbWeChatProduct> findByIdUser(Integer openid);
+//    /**（用户）
+//     * 根据openid查询商品（购物车）
+//     * @param
+//     * @return
+//     */
+//    List<TbWeChatProduct> findByIdUser(String openid);
 
     /**
      * 查询商品列表(productid)
@@ -143,4 +143,12 @@ public interface WeChatProductService {
      * @return
      */
     List<WeChatProductOutput> findByproductid(List<String> productIdList);
+
+//    /**
+//     * 根据productid（查询购物车信息）
+//     * 用于用户添加相同商品的判断
+//     * @param productid
+//     * @return
+//     */
+//    TbWeChatProduct selectProductid(int productid );
 }

@@ -1,4 +1,4 @@
-package com.nsw.wx.user.redis;
+package com.nsw.wx.product.redis;
 
 public class MiaoshaKey extends BasePrefix{
 

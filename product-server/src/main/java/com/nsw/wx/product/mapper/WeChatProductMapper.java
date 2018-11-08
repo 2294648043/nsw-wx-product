@@ -3,13 +3,8 @@ package com.nsw.wx.product.mapper;
 import com.nsw.wx.product.common.DecreaseStockInput;
 import com.nsw.wx.product.pojo.TbWeChatProduct;
 import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
-import java.util.List;
-import java.util.Optional;
-import com.nsw.wx.product.common.DecreaseStockInput;
-import com.nsw.wx.product.pojo.TbWeChatProduct;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
 /**
  * @program: nsw-wx-product
@@ -108,12 +103,7 @@ public interface WeChatProductMapper {
      */
     List<TbWeChatProduct> isBestlist();
 
-    /**（用户）
-     * 根据openid查询商品（购物车）
-     * @param
-     * @return
-     */
-    List<TbWeChatProduct> findByIdUser(@Param("openid") Integer openid);
+
 
 
     /**
@@ -122,5 +112,8 @@ public interface WeChatProductMapper {
      * @return
      */
     List<TbWeChatProduct> findByproductid(List<String> productIdList);
+
+
+
 
 }

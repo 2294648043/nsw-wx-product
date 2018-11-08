@@ -1,4 +1,4 @@
-package com.nsw.wx.user.redis;
+package com.nsw.wx.product.redis;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

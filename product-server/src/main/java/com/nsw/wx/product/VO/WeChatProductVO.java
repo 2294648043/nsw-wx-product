@@ -40,8 +40,8 @@ public class WeChatProductVO {
     @JsonProperty("stock")
     private int stock;
     /**状态*/
-    @JsonProperty("productstatus")
-    private int productstatus;
+    @JsonProperty("productStatus")
+    private int productStatus;
     /**活动类型*/
     @JsonProperty("activitytype")
     private int activitytype;

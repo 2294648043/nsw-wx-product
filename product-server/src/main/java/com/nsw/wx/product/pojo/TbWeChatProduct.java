@@ -120,11 +120,11 @@ public class TbWeChatProduct implements Serializable {
    /**库存*/
     //private  Integer Stock;
     /** 状态, 0正常1下架. */
-    private Integer productstatus;
+    private Integer productStatus;
 
     public TbWeChatProduct() {
     }
-    private  Integer openid;//用户id
+    private  String openid;//用户id
 
     private Integer num;//购买数量
 

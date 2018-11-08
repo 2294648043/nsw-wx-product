@@ -10,37 +10,20 @@ import com.nsw.wx.product.util.JsonMap;
 import com.nsw.wx.product.util.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-/**
- * （商家）
- * 后台产品分类
- */
-import com.nsw.wx.product.util.ResultVOUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**（商家）
  * 后台产品分类
@@ -79,7 +62,7 @@ public class WeChatProductColumnController {
     }
 
     /**
-     * 前端
+     * 后端
      * 产品分类展示
      *
      * @return
@@ -104,6 +87,28 @@ public class WeChatProductColumnController {
     }
 
 
+    /**
+     * 前端
+     * 产品分类展示
+     * @return
+     */
+    @RequestMapping("Qlistcolumn")
+    public Object productColumnlist(HttpServletResponse response){
+        //response.setHeader("Access-Control-Allow-Origin", "*");
+        List<WeChatProductColumn> productInfoList=weChatProductColumnService.Allproductcolumn();
+        List<WeChatProductColumnVO> productInfoVOList = new ArrayList<>();
+        for (WeChatProductColumn productInfo : productInfoList){
+            WeChatProductColumnVO weChatProductColumnVO = new WeChatProductColumnVO();
+            BeanUtils.copyProperties(productInfo, weChatProductColumnVO);
+            productInfoVOList.add(weChatProductColumnVO);
+        }
+        return JSONArray.toJSONString(productInfoVOList);
+    }
+
+
+
+
+
     @RequestMapping("selectid")
     public Object selectid(HttpServletResponse response, @RequestParam("id") int id) {
         response.setHeader("Access-Control-Allow-Origin", "*");
@@ -123,9 +128,8 @@ public class WeChatProductColumnController {
     @RequestMapping("add")
     public Object addproductcolumn(HttpServletResponse response, @RequestBody String json_str) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "*");
         WeChatProductColumn weChatProductColumn = new JsonMap().string2Obj(json_str, new WeChatProductColumn().getClass());
+        weChatProductColumn.setInputtime(new Date());
         weChatProductColumn.setEnterpriseid(248);
         weChatProductColumn.setParentid(1);
         int count =weChatProductColumnService.insertWeChatProductColumn(weChatProductColumn);
@@ -138,8 +142,6 @@ public class WeChatProductColumnController {
     public Object updateproductcolumn(HttpServletResponse response, @RequestBody String json_str
                         ,@RequestParam(value = "photopath",required = false) String photopath) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "*");
         WeChatProductColumn weChatProductColumn = new JsonMap().string2Obj(json_str, new WeChatProductColumn().getClass());
          int count = weChatProductColumnService.updateWeChatProductColumn(weChatProductColumn,photopath);
         return count;

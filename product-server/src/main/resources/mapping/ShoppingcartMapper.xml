@@ -1,362 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.nsw.wx.product.mapper.WeChatProductMapper" >
-  <resultMap id="BaseResultMap" type="com.nsw.wx.product.pojo.TbWeChatProduct" >
+<mapper namespace="com.nsw.wx.product.mapper.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="com.nsw.wx.product.pojo.ShoppingCart" >
       <id column="ID" property="id" jdbcType="INTEGER" />
-      <result column="EnterpriseID" property="enterpriseid" jdbcType="INTEGER" />
       <result column="Title" property="title" jdbcType="NVARCHAR" />
-      <result column="ColumnID" property="columnid" jdbcType="INTEGER" />
-      <result column="OtherColumns" property="othercolumns" jdbcType="VARCHAR" />
-      <result column="PhotoPath" property="photopath" jdbcType="VARCHAR" />
       <result column="Price" property="price" jdbcType="DECIMAL" />
-      <result column="ReturnPoint" property="returnpoint" jdbcType="INTEGER" />
-      <result column="OtherPrice" property="otherprice" jdbcType="VARCHAR" />
-      <result column="Attribute" property="attribute" jdbcType="VARCHAR" />
-      <result column="ShortDesc" property="shortdesc" jdbcType="VARCHAR" />
-      <result column="Hits" property="hits" jdbcType="INTEGER" />
-      <result column="isCommend" property="iscommend" jdbcType="BIT" />
-      <result column="isBest" property="isbest" jdbcType="BIT" />
-      <result column="isTop" property="istop" jdbcType="BIT" />
-      <result column="OtherPhotos" property="otherphotos" jdbcType="VARCHAR" />
-      <result column="ShortTitle" property="shorttitle" jdbcType="VARCHAR" />
-      <result column="OrderID" property="orderid" jdbcType="INTEGER" />
-      <result column="Enable" property="enable" jdbcType="BIT" />
-      <result column="InputTime" property="inputtime" jdbcType="TIMESTAMP" />
-      <result column="EndTime" property="endtime" jdbcType="TIMESTAMP" />
-      <result column="Picture" property="picture" jdbcType="VARCHAR" />
-      <result column="OtherField01" property="otherfield01" jdbcType="VARCHAR" />
-      <result column="OtherField03" property="otherfield03" jdbcType="VARCHAR" />
-      <result column="OtherField02" property="otherfield02" jdbcType="VARCHAR" />
-      <result column="BrandID" property="brandid" jdbcType="INTEGER" />
-      <result column="Unit" property="unit" jdbcType="VARCHAR" />
-      <result column="Content" property="content" />
-      <result column="Stock" property="stock" jdbcType="INTEGER" />
-      <result column="Integral" property="integral" jdbcType="INTEGER" />
-      <result column="Picture01" property="picture01" jdbcType="VARCHAR" />
-      <result column="Balance" property="balance" jdbcType="DECIMAL" />
-      <result column="ActivityType" property="activitytype" jdbcType="INTEGER" />
-      <result column="StartTime" property="starttime" jdbcType="BIGINT" />
-      <result column="OverTime" property="overtime" jdbcType="BIGINT" />
-      <result column="ActivePrice" property="activeprice" jdbcType="DECIMAL" />
-      <result column="ChildEnterpriseID" property="childenterpriseid" jdbcType="INTEGER" />
-      <result column="GroupPrice" property="groupprice" jdbcType="DECIMAL" />
-      <result column="ActivityID" property="activityid" jdbcType="INTEGER" />
-      <result column="GroupPurchaseID" property="grouppurchaseid" jdbcType="INTEGER" />
-      <result column="GroupPurchasePrices" property="grouppurchaseprices" jdbcType="VARCHAR" />
-      <result column="ProductType" property="producttype" jdbcType="INTEGER" />
-      <result column="ActivityStock" property="activitystock" jdbcType="INTEGER" />
-      <result column="SalesVolume" property="salesvolume" jdbcType="INTEGER" />
-      <result column="DistributionSetting" property="distributionsetting" jdbcType="VARCHAR" />
-      <result column="ViewFrequency" property="viewfrequency" jdbcType="INTEGER" />
-      <result column="PraiseCount" property="praisecount" jdbcType="INTEGER" />
-      <result column="Deposit" property="deposit" jdbcType="DECIMAL" />
-      <result column="Rent" property="rent" jdbcType="DECIMAL" />
-      <result column="Volume" property="volume" jdbcType="DECIMAL" />
-      <result column="Weight" property="weight" jdbcType="DECIMAL" />
-      <!--<result column="Stock" property="Stock" jdbcType="INTEGER" />-->
-      <result column="ProductStatus" property="productStatus" jdbcType="INTEGER" />
       <result column="Openid" property="openid" jdbcType="VARCHAR" />
       <result column="Num" property="num" jdbcType="INTEGER" />
       <result column="ProductID" property="productid" jdbcType="INTEGER" />
+      <result column="PhotoPath" property="photopath" jdbcType="VARCHAR" />
   </resultMap>
-  <!--根据登录用户的企业id查询他的产品-->
-  <select id="selectidlist" resultMap="BaseResultMap">
-    select * from dbo.tbWeChatProduct where EnterpriseID=#{EnterpriseID}
-  </select>
-  <!--根据id查询产品信息-->
+    <select id="findByIdcart" resultType="com.nsw.wx.product.pojo.ShoppingCart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        select * from shoppingcart where Openid=#{openid}
+    </select>
 
-  <!--根据id删除产品信息-->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from dbo.tbWeChatProduct where id=#{id}
-  </delete>
-    <!--添加产品-->
-    <insert id="addTbWeChatProduct" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-INSERT INTO tbWeChatProduct(EnterpriseID,Title ,ColumnID,OtherColumns,PhotoPath,Price,ReturnPoint,OtherPrice,Attribute
-,ShortDesc,Content,Hits,isCommend,isBest,isTop,OtherPhotos ,ShortTitle ,OrderID,Enable ,InputTime ,EndTime,Picture
-,OtherField01,OtherField03,OtherField02,BrandID ,Unit ,Stock,Integral ,Picture01 ,Balance,ActivityType,StartTime
-,OverTime ,ActivePrice ,ChildEnterpriseID
-,GroupPrice,ActivityID,GroupPurchaseID,GroupPurchasePrices,ProductType,ActivityStock
-,SalesVolume,DistributionSetting,ViewFrequency,PraiseCount,Deposit,Rent,Volume,Weight,ProductStatus,Openid,Num,ProductID)
-VALUES (#{enterpriseid}
-           ,#{title}
-           ,#{columnid}
-           ,#{othercolumns}
-           ,#{photopath}
-           ,#{price}
-           ,#{returnpoint}
-           ,#{otherprice}
-           ,#{attribute}
-           ,#{shortdesc}
-           ,#{content}
-           ,#{hits}
-           ,#{iscommend}
-           ,#{isbest}
-           ,#{istop}
-           ,#{otherphotos}
-           ,#{shorttitle}
-           ,#{orderid}
-           ,#{enable}
-           ,#{inputtime}
-           ,#{endtime}
-           ,#{picture}
-           ,#{otherfield01}
-           ,#{otherfield03}
-           ,#{otherfield02}
-           ,#{brandid}
-           ,#{unit}
-           ,#{stock}
-           ,#{integral}
-           ,#{picture01}
-           ,#{balance}
-           ,#{activitytype}
-           ,#{starttime}
-           ,#{overtime}
-           ,#{activeprice}
-           ,#{childenterpriseid}
-           ,#{groupprice}
-           ,#{activityid}
-           ,#{grouppurchaseid}
-           ,#{grouppurchaseprices}
-           ,#{producttype}
-           ,#{activitystock}
-           ,#{salesvolume}
-           ,#{distributionsetting}
-           ,#{viewfrequency}
-           ,#{praisecount}
-           ,#{deposit}
-           ,#{rent}
-           ,#{volume}
-           ,#{weight}
-           ,#{productStatus}
-           ,#{openid}
-           ,#{num}
-           ,#{productid})
+    <select id="selectProductid" resultType="com.nsw.wx.product.pojo.ShoppingCart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+         select * from shoppingcart where ProductID=#{productid}
+    </select>
+
+
+    <delete id="deletecart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        delete from shoppingcart where ID=#{id}
+    </delete>
+
+
+    <delete id="cartproductid" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        delete from shoppingcart where ProductID=#{productid}
+    </delete>
+
+
+    <insert id="addshoppingcart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+INSERT INTO shoppingcart(Title,PhotoPath,Price,Openid,Num,ProductID)
+VALUES (#{title},#{photopath},#{price} ,#{openid} ,#{num} ,#{productid})
   </insert>
-   <!--查询全部上架产品-->
-  <select id="findUpAll" resultMap="BaseResultMap">
-    select  * from  tbWeChatProduct where ProductStatus = 0
-  </select>
 
-    <select id="findList" resultMap="BaseResultMap" parameterType="java.util.List">
-        select * from tbWeChatProduct where id IN
-        <foreach collection="list" index="index" item="id" open="(" separator="," close=")">
-            #{id}
-        </foreach>
-    </select>
-    <!--查询id产品信息-->
-    <select id = "findById" resultMap="BaseResultMap" parameterType="Integer">
-    select  * from tbWeChatProduct where id =#{productIdList}
-    </select>
-    <!--修改产品信息-->
-    <update id="updateWeChatProduct" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct" >
-        update tbWeChatProduct
-        <set >
-            <if test="enterpriseid != null" >
-                EnterpriseID = #{enterpriseid,jdbcType=INTEGER},
-            </if>
-            <if test="title != null" >
-                Title = #{title,jdbcType=NVARCHAR},
-            </if>
-            <if test="columnid != null" >
-                ColumnID = #{columnid,jdbcType=INTEGER},
-            </if>
-            <if test="othercolumns != null" >
-                OtherColumns = #{othercolumns,jdbcType=VARCHAR},
-            </if>
-            <if test="photopath != null" >
-                PhotoPath = #{photopath,jdbcType=VARCHAR},
-            </if>
-            <if test="price != null" >
-                Price = #{price,jdbcType=DECIMAL},
-            </if>
-            <if test="returnpoint != null" >
-                ReturnPoint = #{returnpoint,jdbcType=INTEGER},
-            </if>
-            <if test="otherprice != null" >
-                OtherPrice = #{otherprice,jdbcType=VARCHAR},
-            </if>
-            <if test="attribute != null" >
-                Attribute = #{attribute,jdbcType=VARCHAR},
-            </if>
-            <if test="shortdesc != null" >
-                ShortDesc = #{shortdesc,jdbcType=VARCHAR},
-            </if>
-            <if test="hits != null" >
-                Hits = #{hits,jdbcType=INTEGER},
-            </if>
-            <if test="iscommend != null" >
-                isCommend = #{iscommend,jdbcType=BIT},
-            </if>
-            <if test="isbest != null" >
-                isBest = #{isbest,jdbcType=BIT},
-            </if>
-            <if test="istop != null" >
-                isTop = #{istop,jdbcType=BIT},
-            </if>
-            <if test="otherphotos != null" >
-                OtherPhotos = #{otherphotos,jdbcType=VARCHAR},
-            </if>
-            <if test="shorttitle != null" >
-                ShortTitle = #{shorttitle,jdbcType=VARCHAR},
-            </if>
-            <if test="orderid != null" >
-                OrderID = #{orderid,jdbcType=INTEGER},
-            </if>
-            <if test="enable != null" >
-                Enable = #{enable,jdbcType=BIT},
-            </if>
-            <if test="inputtime != null" >
-                InputTime = #{inputtime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="endtime != null" >
-                EndTime = #{endtime,jdbcType=TIMESTAMP},
-            </if>
-            <if test="picture != null" >
-                Picture = #{picture,jdbcType=VARCHAR},
-            </if>
-            <if test="otherfield01 != null" >
-                OtherField01 = #{otherfield01,jdbcType=VARCHAR},
-            </if>
-            <if test="otherfield03 != null" >
-                OtherField03 = #{otherfield03,jdbcType=VARCHAR},
-            </if>
-            <if test="otherfield02 != null" >
-                OtherField02 = #{otherfield02,jdbcType=VARCHAR},
-            </if>
-            <if test="brandid != null" >
-                BrandID = #{brandid,jdbcType=INTEGER},
-            </if>
-            <if test="unit != null" >
-                Unit = #{unit,jdbcType=VARCHAR},
-            </if>
-            <if test="stock != null" >
-                Stock = #{stock,jdbcType=INTEGER},
-            </if>
-            <if test="integral != null" >
-                Integral = #{integral,jdbcType=INTEGER},
-            </if>
-            <if test="picture01 != null" >
-                Picture01 = #{picture01,jdbcType=VARCHAR},
-            </if>
-            <if test="balance != null" >
-                Balance = #{balance,jdbcType=DECIMAL},
-            </if>
-            <if test="activitytype != null" >
-                ActivityType = #{activitytype,jdbcType=INTEGER},
-            </if>
-            <if test="starttime != null" >
-                StartTime = #{starttime,jdbcType=BIGINT},
-            </if>
-            <if test="overtime != null" >
-                OverTime = #{overtime,jdbcType=BIGINT},
-            </if>
-            <if test="activeprice != null" >
-                ActivePrice = #{activeprice,jdbcType=DECIMAL},
-            </if>
-            <if test="childenterpriseid != null" >
-                ChildEnterpriseID = #{childenterpriseid,jdbcType=INTEGER},
-            </if>
-            <if test="groupprice != null" >
-                GroupPrice = #{groupprice,jdbcType=DECIMAL},
-            </if>
-            <if test="activityid != null" >
-                ActivityID = #{activityid,jdbcType=INTEGER},
-            </if>
-            <if test="grouppurchaseid != null" >
-                GroupPurchaseID = #{grouppurchaseid,jdbcType=INTEGER},
-            </if>
-            <if test="grouppurchaseprices != null" >
-                GroupPurchasePrices = #{grouppurchaseprices,jdbcType=VARCHAR},
-            </if>
-            <if test="producttype != null" >
-                ProductType = #{producttype,jdbcType=INTEGER},
-            </if>
-            <if test="activitystock != null" >
-                ActivityStock = #{activitystock,jdbcType=INTEGER},
-            </if>
-            <if test="salesvolume != null" >
-                SalesVolume = #{salesvolume,jdbcType=INTEGER},
-            </if>
-            <if test="distributionsetting != null" >
-                DistributionSetting = #{distributionsetting,jdbcType=VARCHAR},
-            </if>
-            <if test="viewfrequency != null" >
-                ViewFrequency = #{viewfrequency,jdbcType=INTEGER},
-            </if>
-            <if test="praisecount != null" >
-                PraiseCount = #{praisecount,jdbcType=INTEGER},
-            </if>
-            <if test="deposit != null" >
-                Deposit = #{deposit,jdbcType=DECIMAL},
-            </if>
-            <if test="rent != null" >
-                Rent = #{rent,jdbcType=DECIMAL},
-            </if>
-            <if test="volume != null" >
-                Volume = #{volume,jdbcType=DECIMAL},
-            </if>
-            <if test="weight != null" >
-                Weight = #{weight,jdbcType=DECIMAL},
-            </if>
-            <if test="content != null" >
-                Content = #{content,jdbcType=LONGVARCHAR},
-            </if>
-            <if test="productStatus != null" >
-                ProductStatus = #{productStatus,jdbcType=INTEGER},
-            </if>
-            <if test="openid != null" >
-                Openid = #{openid,jdbcType=VARCHAR},
-            </if>
-            <if test="num != null" >
-                Num = #{num,jdbcType=INTEGER},
-            </if>
-            <if test="productid != null" >
-                ProductID = #{productid,jdbcType=INTEGER},
-            </if>
-        </set>
+    <update id="updateshoppingcart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+      update shoppingcart  <set >
+        <if test="title != null" >
+            Title = #{title,jdbcType=NVARCHAR},
+        </if>
+        <if test="photopath != null" >
+            PhotoPath = #{photopath,jdbcType=VARCHAR},
+        </if>
+        <if test="price != null" >
+            Price = #{price,jdbcType=DECIMAL},
+        </if>
+
+        <if test="openid != null" >
+            Openid = #{openid,jdbcType=VARCHAR},
+        </if>
+        <if test="num != null" >
+            Num = #{num,jdbcType=INTEGER},
+        </if>
+        <if test="productid != null" >
+            ProductID = #{productid,jdbcType=INTEGER},
+        </if>
+    </set>
         where ID = #{id,jdbcType=INTEGER}
     </update>
-   <!--查询有类目的产品信息  可根据登录的企业id，和上下架状态分类-->
-    <select id="findAllproduct" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select a.* from dbo.tbWeChatProduct a,dbo.tbWeChatProductColumn b
-        where a.ColumnID=b.ID
-        <if test="productStatus != null">
-            and a.ProductStatus=#{productStatus}
-        </if>
-        <if test="enterpriseid != null and enterpriseid != 0">
-            and a.EnterpriseID=#{enterpriseid}
-        </if>
-    </select>
-
-    <!--根据标题查询产品-->
-    <select id="findByTitle" resultMap="BaseResultMap"  parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-        select * from  dbo.tbWeChatProduct where Title=#{title}
-    </select>
-
-    <select id="selectBycolumnid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-        select  * from  dbo.tbWeChatProduct where ColumnID=#{columnid}
-    </select>
-
-    <update id  = "SellupdateWeChatProduct" parameterType="Integer">
-    update tbWeChatProduct set stock = #{stock} where  id = #{id}
-  </update>
-
-    <!--查询全部产品iBest-->
-    <select id="isBestlist" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-        select * from dbo.tbWeChatProduct where isBest='True'
-    </select>
-
-    <!--根据用户（openid）查询产品信息-->
-    <select id="findByIdUser" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-    select * from dbo.tbWeChatProduct where Openid=#{openid}
-    </select>
-
-    <select id="findByproductid" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-     select * from dbo.tbWeChatProduct where ProductID=#{productid}
-    </select>
-
-    <select id="selectProductid" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
-     select * from dbo.tbWeChatProduct where ProductID=#{productid}
-    </select>
-
 </mapper>

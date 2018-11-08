@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.nsw.wx.product.mapper")
+
 public class ProductServerApplication {
 
     public static void main(String[] args) {
