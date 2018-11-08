@@ -79,9 +79,8 @@ public class WeChatProductController implements InitializingBean{
      * 4. 构造数据
      */
     @RequestMapping("/list")
-        public String list(HttpServletResponse response, Model model) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        public String list( Model model) {
+
+        public String list(Model model) {
             //1. 查询所有在架的商品
             List<TbWeChatProduct> productInfoList = weChatProductService.findUpAll();
            System.out.println(productInfoList);
@@ -151,7 +150,6 @@ public class WeChatProductController implements InitializingBean{
      * 商家分页显示产品可根据是否上下架显示
      * @param page
      * @param limit
-     * @param enterpriseid
      * @param productstatus
      * @return
      */
@@ -202,7 +200,6 @@ public class WeChatProductController implements InitializingBean{
 
     /**
      * 增加方法
-     * @param response
      * @param json_str
      * @return
      */
@@ -226,7 +223,6 @@ public class WeChatProductController implements InitializingBean{
     @RequestMapping("update111")
     public Object update111(@RequestBody String json_str
             ,@RequestParam(value = "photopath",required = false) String photopath){
-        response.setHeader("Access-Control-Allow-Origin", "*");
         System.out.println("---------------->"+json_str);
         TbWeChatProduct tbWeChatProduct = new JsonMap().string2Obj(json_str,new TbWeChatProduct().getClass());
         int count = weChatProductService.updateWeChatProduct11(tbWeChatProduct,photopath);

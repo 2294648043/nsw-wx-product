@@ -6,7 +6,7 @@ import com.nsw.wx.product.pojo.TbWeChatProduct;
 import com.nsw.wx.product.redis.RedisService;
 import com.nsw.wx.product.server.ShoppingCartService;
 import com.nsw.wx.product.util.ResultVOUtil;
-import org.elasticsearch.action.delete.DeleteResponse;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

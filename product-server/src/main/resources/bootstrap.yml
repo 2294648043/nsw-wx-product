@@ -1,7 +1,3 @@
-<<<<<<< Temporary merge branch 1
-=======
-
->>>>>>> Temporary merge branch 2
 #指定注册中心地址
 eureka:
   client:
