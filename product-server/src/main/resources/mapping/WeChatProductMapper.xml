@@ -54,8 +54,8 @@
       <result column="Volume" property="volume" jdbcType="DECIMAL" />
       <result column="Weight" property="weight" jdbcType="DECIMAL" />
       <!--<result column="Stock" property="Stock" jdbcType="INTEGER" />-->
-      <result column="ProductStatus" property="productstatus" jdbcType="INTEGER" />
-      <result column="Openid" property="openid" jdbcType="INTEGER" />
+      <result column="ProductStatus" property="productStatus" jdbcType="INTEGER" />
+      <result column="Openid" property="openid" jdbcType="VARCHAR" />
       <result column="Num" property="num" jdbcType="INTEGER" />
       <result column="ProductID" property="productid" jdbcType="INTEGER" />
   </resultMap>
@@ -127,7 +127,7 @@ VALUES (#{enterpriseid}
            ,#{rent}
            ,#{volume}
            ,#{weight}
-           ,#{productstatus}
+           ,#{productStatus}
            ,#{openid}
            ,#{num}
            ,#{productid})
@@ -301,11 +301,11 @@ VALUES (#{enterpriseid}
             <if test="content != null" >
                 Content = #{content,jdbcType=LONGVARCHAR},
             </if>
-            <if test="productstatus != null" >
-                ProductStatus = #{productstatus,jdbcType=INTEGER},
+            <if test="productStatus != null" >
+                ProductStatus = #{productStatus,jdbcType=INTEGER},
             </if>
             <if test="openid != null" >
-                Openid = #{openid,jdbcType=INTEGER},
+                Openid = #{openid,jdbcType=VARCHAR},
             </if>
             <if test="num != null" >
                 Num = #{num,jdbcType=INTEGER},
@@ -320,8 +320,8 @@ VALUES (#{enterpriseid}
     <select id="findAllproduct" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select a.* from dbo.tbWeChatProduct a,dbo.tbWeChatProductColumn b
         where a.ColumnID=b.ID
-        <if test="productstatus != null">
-            and a.ProductStatus=#{productstatus}
+        <if test="productStatus != null">
+            and a.ProductStatus=#{productStatus}
         </if>
         <if test="enterpriseid != null and enterpriseid != 0">
             and a.EnterpriseID=#{enterpriseid}
@@ -354,4 +354,9 @@ VALUES (#{enterpriseid}
     <select id="findByproductid" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
      select * from dbo.tbWeChatProduct where ProductID=#{productid}
     </select>
+
+    <select id="selectProductid" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
+     select * from dbo.tbWeChatProduct where ProductID=#{productid}
+    </select>
+
 </mapper>

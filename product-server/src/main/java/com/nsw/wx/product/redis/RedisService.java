@@ -17,7 +17,6 @@ public class RedisService {
 	@Autowired
 	JedisPool jedisPool;
 
-	
 	/**
 	 * 获取当个对象
 	 * */
@@ -63,7 +62,7 @@ public class RedisService {
 			returnToPool(jedis);
 		}
 	}
-	
+
 	/**
 	 * 设置对象
 	 * */
@@ -88,24 +87,22 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	/**
-	 * <p>设置key value并制定这个键值的有效期</p >
-	 * @param key
-	 * @param value
-	 * @param seconds 单位:秒
-	 * @return 成功返回OK 失败和异常返回null
-	 */
-	public String set(String key,String value,int seconds){
-		Jedis jedis = null;
-		String res = null;
-		try {
-			jedis = jedisPool.getResource();
-			res = jedis.setex(key, seconds, value);
-		}  finally {
-			returnToPool(jedis);
-		}
-		return res;
-	}
+    public <T> boolean set(String key,  String value) {
+        Jedis jedis = null;
+        try {
+            jedis =  jedisPool.getResource();
+            String str = beanToString(value);
+            if(str == null || str.length() <= 0) {
+                return false;
+            }
+            //生成真正的key
+            String realKey  =  key;
+            jedis.set(realKey, str);
+            return true;
+        }finally {
+            returnToPool(jedis);
+        }
+    }
 	/**
 	 * 判断key是否存在
 	 * */
@@ -120,7 +117,7 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
 	/**
 	 * 删除
 	 * */
@@ -136,7 +133,7 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
 	/**
 	 * 增加值
 	 * */
@@ -151,7 +148,7 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
 	/**
 	 * 减少值
 	 * */
@@ -166,7 +163,7 @@ public class RedisService {
 			  returnToPool(jedis);
 		 }
 	}
-	
+
 	public boolean delete(KeyPrefix prefix) {
 		if(prefix == null) {
 			return false;
@@ -189,7 +186,7 @@ public class RedisService {
 			}
 		}
 	}
-	
+
 	public List<String> scanKeys(String key) {
 		Jedis jedis = null;
 		try {
@@ -215,7 +212,7 @@ public class RedisService {
 			}
 		}
 	}
-	
+
 	public static <T> String beanToString(T value) {
 		if(value == null) {
 			return null;

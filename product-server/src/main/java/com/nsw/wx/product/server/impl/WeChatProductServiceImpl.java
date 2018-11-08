@@ -39,11 +39,14 @@ public class WeChatProductServiceImpl implements WeChatProductService {
 
     @Autowired
     private WeChatProductMapper weChatProductMapper;
-    /** 查询上架商品
-     * @author qqg
-     * @date
+
+    /**
+     * 查询上架商品
+     *
      * @param
      * @return
+     * @author qqg
+     * @date
      */
     public List<TbWeChatProduct> findUpAll() {
         return weChatProductMapper.findUpAll();
@@ -54,16 +57,17 @@ public class WeChatProductServiceImpl implements WeChatProductService {
      * page：当前页
      * pageSize：页面容量
      * enterpriseid:企业ID
+     *
      * @param
      * @param
      * @return
      */
-    public PageInfo<TbWeChatProduct> pageSelect(int page, int pageSize, String enterpriseid, String productstatus){
+    public PageInfo<TbWeChatProduct> pageSelect(int page, int pageSize, String enterpriseid, String productstatus) {
         //pageHelper帮我们生成分页语句
-        PageHelper.startPage(page,pageSize);
-        List<TbWeChatProduct> findlist = weChatProductMapper.findAllproduct(enterpriseid,productstatus);
-        PageInfo<TbWeChatProduct> pageInfoProductList =  new PageInfo<TbWeChatProduct>(findlist);
-        System.out.println("pageInfoProductList"+pageInfoProductList);
+        PageHelper.startPage(page, pageSize);
+        List<TbWeChatProduct> findlist = weChatProductMapper.findAllproduct(enterpriseid, productstatus);
+        PageInfo<TbWeChatProduct> pageInfoProductList = new PageInfo<TbWeChatProduct>(findlist);
+        System.out.println("pageInfoProductList" + pageInfoProductList);
         return pageInfoProductList;
     }
 
@@ -78,23 +82,24 @@ public class WeChatProductServiceImpl implements WeChatProductService {
                 .collect(Collectors.toList());
     }
 
-    /**商家
+    /**
+     * 商家
      * 根据登录的企业id查询所有产品
      * 上架(0),下架(1)分类
      * @param
      * @param enterpriseid
      */
     @Override
-    public List<TbWeChatProduct> findAllproduct(String enterpriseid,String productstatus) {
-        String __enenterpriseid=null;
-        String __productstatus=null;
-        if (enterpriseid !=null) {
+    public List<TbWeChatProduct> findAllproduct(String enterpriseid, String productstatus) {
+        String __enenterpriseid = null;
+        String __productstatus = null;
+        if (enterpriseid != null) {
             __enenterpriseid = enterpriseid;
         }
-        if(productstatus !=null){
-            __productstatus=productstatus;
+        if (productstatus != null) {
+            __productstatus = productstatus;
         }
-        return weChatProductMapper.findAllproduct(__enenterpriseid,__productstatus);
+        return weChatProductMapper.findAllproduct(__enenterpriseid, __productstatus);
     }
 
     /**
@@ -114,23 +119,24 @@ public class WeChatProductServiceImpl implements WeChatProductService {
     @Transactional
     public Boolean addstock(List<DecreaseStockInput> decreaseStockInputList) {
         List<TbWeChatProduct> productInfoListadd = new ArrayList<>();
-        for (DecreaseStockInput decreaseStockInput: decreaseStockInputList) {
+        for (DecreaseStockInput decreaseStockInput : decreaseStockInputList) {
             WeChatProductOutput weChatProductOutput = redisService.get(WeChatProductOutputKey.getById, "" + decreaseStockInput.getProductId(), WeChatProductOutput.class);
             System.out.println("脑瓜同");
             //判断商品是否存在
-            if (weChatProductOutput == null){
+            if (weChatProductOutput == null) {
                 throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
             }
             weChatProductOutput.setStock(weChatProductOutput.getStock() + decreaseStockInput.getNum());
             redisService.set(WeChatProductOutputKey.getById, "" + weChatProductOutput.getId(), weChatProductOutput);
-            System.out.println("*****"+weChatProductOutput.getId()+weChatProductOutput.getStock());
-            int count =  weChatProductMapper.SellupdateWeChatProduct(weChatProductOutput.getId(),weChatProductOutput.getStock());
-            if (count<1){
+            System.out.println("*****" + weChatProductOutput.getId() + weChatProductOutput.getStock());
+            int count = weChatProductMapper.SellupdateWeChatProduct(weChatProductOutput.getId(), weChatProductOutput.getStock());
+            if (count < 1) {
                 throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
         }
         return true;
     }
+
     /**
      * 下单用（扣库存）
      * @param decreaseStockInputList
@@ -139,28 +145,28 @@ public class WeChatProductServiceImpl implements WeChatProductService {
     @Transactional
     public List<TbWeChatProduct> decreaseStockProcess(List<DecreaseStockInput> decreaseStockInputList) {
         List<TbWeChatProduct> productInfoList = new ArrayList<>();
-        for (DecreaseStockInput decreaseStockInput: decreaseStockInputList) {
+        for (DecreaseStockInput decreaseStockInput : decreaseStockInputList) {
             Integer productIdList = Integer.parseInt(decreaseStockInput.getProductId());
             TbWeChatProduct productInfo = weChatProductMapper.findById(productIdList);
             //判断商品是否存在
-            if (productInfo == null){
+            if (productInfo == null) {
                 throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-           // TbWeChatProduct productInfo = productInfoOptional.get();
+            // TbWeChatProduct productInfo = productInfoOptional.get();
             //库存是否足够
             Integer result = productInfo.getStock() - decreaseStockInput.getNum();
-            if (result <0) {
+            if (result < 0) {
 
                 throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
             //把减过的库存字段赋值
             productInfo.setStock(result);
             //修改库存信息
-           int count =  weChatProductMapper.updateWeChatProduct(productInfo);
-           if(count<1){
-               throw new ProductException(ResultEnum.PRODUCT_STOCK_UPDATE);
-           }
-           productInfoList.add(productInfo);
+            int count = weChatProductMapper.updateWeChatProduct(productInfo);
+            if (count < 1) {
+                throw new ProductException(ResultEnum.PRODUCT_STOCK_UPDATE);
+            }
+            productInfoList.add(productInfo);
         }
         return productInfoList;
     }
@@ -168,21 +174,23 @@ public class WeChatProductServiceImpl implements WeChatProductService {
 
     /**
      * 根据id查询商品
+     *
      * @param productIdList
      * @return
      */
-   public TbWeChatProduct findById( Integer productIdList){
+    public TbWeChatProduct findById(Integer productIdList) {
         return weChatProductMapper.findById(productIdList);
     }
 
     /**
      * 根据id删除当前产品信息
+     *
      * @param id
      * @return
      */
-    public int deleteByPrimaryKey(Integer id){
+    public int deleteByPrimaryKey(Integer id) {
         //删除前确认是否有这个产品
-        if (weChatProductMapper.findById(id)==null){
+        if (weChatProductMapper.findById(id) == null) {
             throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
         }
 //        //要删除的用户订单产品
@@ -204,13 +212,14 @@ public class WeChatProductServiceImpl implements WeChatProductService {
 
     /**
      * 添加产品信息
+     *
      * @param record
      * @return
      */
     @Override
     public int addTbWeChatProduct(TbWeChatProduct record) {
         //添加前确认是否已经有了这个产品
-       // record.setEnterpriseid(248);
+        record.setEnterpriseid(248);
         record.setInputtime(new Date());
         record.setEndtime(new Date());
         TbWeChatProduct updateWeChatProduct =weChatProductMapper.findByTitle(record.getTitle());
@@ -239,11 +248,12 @@ public class WeChatProductServiceImpl implements WeChatProductService {
 
     /**
      * 修改产品信息
+     *
      * @param record
      * @return
      */
     @Override
-    public int updateWeChatProduct11(TbWeChatProduct record,String photopath) {
+    public int updateWeChatProduct11(TbWeChatProduct record, String photopath) {
         String path = "F:/idea/file/nswxm/nsw-wx-plat-wechathous/src/main/resources/static/";
         File file = new File(path + photopath);
         System.out.println("photopath:" + photopath);
@@ -258,6 +268,7 @@ public class WeChatProductServiceImpl implements WeChatProductService {
 
     /**
      * 根据产品columnid(id)查询信息
+     *
      * @param columnid
      * @return
      */
@@ -285,34 +296,6 @@ public class WeChatProductServiceImpl implements WeChatProductService {
         return weChatProductMapper.isBestlist();
     }
 
-    /**
-     * 用户添加产品到购物车
-     * @param
-     * @return
-     */
-    @Override
-    public int UseraddTbWeChatProduct(int openid ,int id,String num){
-        TbWeChatProduct  Tb= weChatProductMapper.findById(id);
-        Tb.setOpenid(openid);
-        Tb.setProductid(id);
-        if(num ==null||num==""){
-            Tb.setNum(1);
-        }else{
-            Tb.setNum(Integer.parseInt(num));
-        }
-        return weChatProductMapper.addTbWeChatProduct(Tb);
-    }
-
-    /**
-     * 用户根据openid查询产品（购物车信息）
-     * @param openid
-     * @return
-     */
-    @Override
-    public  List<TbWeChatProduct> findByIdUser(Integer openid){
-        System.out.println("+++++++++++++++++"+weChatProductMapper.findByIdUser(openid));
-        return weChatProductMapper.findByIdUser(openid);
-    }
 
     @Override
     public List<WeChatProductOutput> findByproductid(List<String> productIdList) {
@@ -324,4 +307,5 @@ public class WeChatProductServiceImpl implements WeChatProductService {
                 })
                 .collect(Collectors.toList());
     }
+
 }

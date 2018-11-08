@@ -2,6 +2,7 @@ package com.nsw.wx.product.common;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.math.BigDecimal;
 
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
  * 2018-10-19 9:13
  */
 @Data
+@Document(indexName = "product", type = "wechatproductoutput")
 public class WeChatProductOutput {
     /**商品id*/
     private Integer id;
@@ -35,7 +37,6 @@ public class WeChatProductOutput {
     /** 类目编号. */
     private Integer columnid;
     /**图片*/
-
     private String photopath;
     /**销售量*/
     private Integer salesvolume;

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nsw.wx.product.mapper.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="com.nsw.wx.product.pojo.ShoppingCart" >
+      <id column="ID" property="id" jdbcType="INTEGER" />
+      <result column="Title" property="title" jdbcType="NVARCHAR" />
+      <result column="Price" property="price" jdbcType="DECIMAL" />
+      <result column="Openid" property="openid" jdbcType="VARCHAR" />
+      <result column="Num" property="num" jdbcType="INTEGER" />
+      <result column="ProductID" property="productid" jdbcType="INTEGER" />
+      <result column="PhotoPath" property="photopath" jdbcType="VARCHAR" />
+  </resultMap>
+    <select id="findByIdcart" resultType="com.nsw.wx.product.pojo.ShoppingCart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        select * from shoppingcart where Openid=#{openid}
+    </select>
+
+    <select id="selectProductid" resultType="com.nsw.wx.product.pojo.ShoppingCart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+         select * from shoppingcart where ProductID=#{productid}
+    </select>
+
+
+    <delete id="deletecart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        delete from shoppingcart where ID=#{id}
+    </delete>
+
+
+    <delete id="cartproductid" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+        delete from shoppingcart where ProductID=#{productid}
+    </delete>
+
+
+    <insert id="addshoppingcart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+INSERT INTO shoppingcart(Title,PhotoPath,Price,Openid,Num,ProductID)
+VALUES (#{title},#{photopath},#{price} ,#{openid} ,#{num} ,#{productid})
+  </insert>
+
+    <update id="updateshoppingcart" parameterType="com.nsw.wx.product.pojo.ShoppingCart">
+      update shoppingcart  <set >
+        <if test="title != null" >
+            Title = #{title,jdbcType=NVARCHAR},
+        </if>
+        <if test="photopath != null" >
+            PhotoPath = #{photopath,jdbcType=VARCHAR},
+        </if>
+        <if test="price != null" >
+            Price = #{price,jdbcType=DECIMAL},
+        </if>
+
+        <if test="openid != null" >
+            Openid = #{openid,jdbcType=VARCHAR},
+        </if>
+        <if test="num != null" >
+            Num = #{num,jdbcType=INTEGER},
+        </if>
+        <if test="productid != null" >
+            ProductID = #{productid,jdbcType=INTEGER},
+        </if>
+    </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

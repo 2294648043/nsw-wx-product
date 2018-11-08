@@ -1,5 +1,6 @@
 package com.nsw.wx.product.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.nsw.wx.product.VO.WeChatProductColumnVO;
 import com.nsw.wx.product.pojo.WeChatProductColumn;

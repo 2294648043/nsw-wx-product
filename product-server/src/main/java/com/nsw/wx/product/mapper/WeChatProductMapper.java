@@ -103,12 +103,7 @@ public interface WeChatProductMapper {
      */
     List<TbWeChatProduct> isBestlist();
 
-    /**（用户）
-     * 根据openid查询商品（购物车）
-     * @param
-     * @return
-     */
-    List<TbWeChatProduct> findByIdUser(@Param("openid") Integer openid);
+
 
 
     /**
@@ -117,5 +112,8 @@ public interface WeChatProductMapper {
      * @return
      */
     List<TbWeChatProduct> findByproductid(List<String> productIdList);
+
+
+
 
 }
