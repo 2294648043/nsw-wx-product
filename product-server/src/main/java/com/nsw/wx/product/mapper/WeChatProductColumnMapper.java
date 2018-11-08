@@ -15,11 +15,6 @@ public interface WeChatProductColumnMapper {
     List<WeChatProductColumn> findAllproductcolumn(@Param("enterpriseid") String enterpriseid);
 
     /**
-     * 显示全部产品分类
-     * @return
-     */
-    List<WeChatProductColumn> Allproductcolumn();
-    /**
      * 根据id删除分类信息
      * @param id
      * @return
@@ -56,9 +51,15 @@ public interface WeChatProductColumnMapper {
     WeChatProductColumn findByTitle(String title);
 
     /**
+     * 显示全部产品分类
+     * @return
+     */
+    List<WeChatProductColumn> Allproductcolumn();
+
+    /**
      * 查询产品父类标题和id
      * @param enterpriseid
      * @return
      */
-   List<WeChatProductColumn> SelTitle(@Param("enterpriseid") Integer enterpriseid);
+    List<WeChatProductColumn> SelTitle(@Param("enterpriseid") Integer enterpriseid);
 }

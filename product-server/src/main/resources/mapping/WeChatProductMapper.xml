@@ -53,13 +53,14 @@
       <result column="Rent" property="rent" jdbcType="DECIMAL" />
       <result column="Volume" property="volume" jdbcType="DECIMAL" />
       <result column="Weight" property="weight" jdbcType="DECIMAL" />
-    <!--<result column="Stock" property="Stock" jdbcType="INTEGER" />-->
-    <result column="ProductStatus" property="productstatus" jdbcType="INTEGER" />
-
-
+      <!--<result column="Stock" property="Stock" jdbcType="INTEGER" />-->
+      <result column="ProductStatus" property="productstatus" jdbcType="INTEGER" />
+      <result column="Openid" property="openid" jdbcType="INTEGER" />
+      <result column="Num" property="num" jdbcType="INTEGER" />
+      <result column="ProductID" property="productid" jdbcType="INTEGER" />
   </resultMap>
   <!--根据登录用户的企业id查询他的产品-->
-  <select id="selectidlist" resultMap="BaseResultMap" >
+  <select id="selectidlist" resultMap="BaseResultMap">
     select * from dbo.tbWeChatProduct where EnterpriseID=#{EnterpriseID}
   </select>
   <!--根据id查询产品信息-->
@@ -68,14 +69,14 @@
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dbo.tbWeChatProduct where id=#{id}
   </delete>
-  <!--添加产品-->
-  <insert id="addTbWeChatProduct" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
+    <!--添加产品-->
+    <insert id="addTbWeChatProduct" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
 INSERT INTO tbWeChatProduct(EnterpriseID,Title ,ColumnID,OtherColumns,PhotoPath,Price,ReturnPoint,OtherPrice,Attribute
 ,ShortDesc,Content,Hits,isCommend,isBest,isTop,OtherPhotos ,ShortTitle ,OrderID,Enable ,InputTime ,EndTime,Picture
 ,OtherField01,OtherField03,OtherField02,BrandID ,Unit ,Stock,Integral ,Picture01 ,Balance,ActivityType,StartTime
 ,OverTime ,ActivePrice ,ChildEnterpriseID
 ,GroupPrice,ActivityID,GroupPurchaseID,GroupPurchasePrices,ProductType,ActivityStock
-,SalesVolume,DistributionSetting,ViewFrequency,PraiseCount,Deposit,Rent,Volume,Weight,ProductStatus)
+,SalesVolume,DistributionSetting,ViewFrequency,PraiseCount,Deposit,Rent,Volume,Weight,ProductStatus,Openid,Num,ProductID)
 VALUES (#{enterpriseid}
            ,#{title}
            ,#{columnid}
@@ -126,12 +127,14 @@ VALUES (#{enterpriseid}
            ,#{rent}
            ,#{volume}
            ,#{weight}
-           ,#{productstatus})
+           ,#{productstatus}
+           ,#{openid}
+           ,#{num}
+           ,#{productid})
   </insert>
-
    <!--查询全部上架产品-->
   <select id="findUpAll" resultMap="BaseResultMap">
-    select  * from  tbWeChatProduct where productStatus = 0
+    select  * from  tbWeChatProduct where ProductStatus = 0
   </select>
 
     <select id="findList" resultMap="BaseResultMap" parameterType="java.util.List">
@@ -301,6 +304,15 @@ VALUES (#{enterpriseid}
             <if test="productstatus != null" >
                 ProductStatus = #{productstatus,jdbcType=INTEGER},
             </if>
+            <if test="openid != null" >
+                Openid = #{openid,jdbcType=INTEGER},
+            </if>
+            <if test="num != null" >
+                Num = #{num,jdbcType=INTEGER},
+            </if>
+            <if test="productid != null" >
+                ProductID = #{productid,jdbcType=INTEGER},
+            </if>
         </set>
         where ID = #{id,jdbcType=INTEGER}
     </update>
@@ -309,7 +321,7 @@ VALUES (#{enterpriseid}
         select a.* from dbo.tbWeChatProduct a,dbo.tbWeChatProductColumn b
         where a.ColumnID=b.ID
         <if test="productstatus != null">
-            and a.productStatus=#{productstatus}
+            and a.ProductStatus=#{productstatus}
         </if>
         <if test="enterpriseid != null and enterpriseid != 0">
             and a.EnterpriseID=#{enterpriseid}
@@ -325,4 +337,21 @@ VALUES (#{enterpriseid}
         select  * from  dbo.tbWeChatProduct where ColumnID=#{columnid}
     </select>
 
+    <update id  = "SellupdateWeChatProduct" parameterType="Integer">
+    update tbWeChatProduct set stock = #{stock} where  id = #{id}
+  </update>
+
+    <!--查询全部产品iBest-->
+    <select id="isBestlist" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
+        select * from dbo.tbWeChatProduct where isBest='True'
+    </select>
+
+    <!--根据用户（openid）查询产品信息-->
+    <select id="findByIdUser" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
+    select * from dbo.tbWeChatProduct where Openid=#{openid}
+    </select>
+
+    <select id="findByproductid" resultMap="BaseResultMap" parameterType="com.nsw.wx.product.pojo.TbWeChatProduct">
+     select * from dbo.tbWeChatProduct where ProductID=#{productid}
+    </select>
 </mapper>

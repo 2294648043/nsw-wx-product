@@ -46,7 +46,7 @@ public class TbWeChatProduct implements Serializable {
 
     private Boolean istop;//是否置顶
 
-    private String otherphotos;//其他照片 *
+    private String otherphotos;//其他照片
 
     private String shorttitle;//短标题
 
@@ -55,6 +55,7 @@ public class TbWeChatProduct implements Serializable {
     private Boolean enable;//是否有效
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date inputtime;//输入时间
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endtime;//终端时间
 
@@ -116,14 +117,19 @@ public class TbWeChatProduct implements Serializable {
     private BigDecimal volume;//体积
 
     private BigDecimal weight;//重量
-
-//  /**库存*/
-//  private  Integer Stock;
+   /**库存*/
+    //private  Integer Stock;
     /** 状态, 0正常1下架. */
     private Integer productstatus;
 
     public TbWeChatProduct() {
     }
+    private  Integer openid;//用户id
+
+    private Integer num;//购买数量
+
+//    产品id(供购物车使用)
+    private Integer productid;
 
 
 }

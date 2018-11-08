@@ -52,6 +52,4 @@ public class WeChatProductVO {
     @JsonProperty("weight")
     private BigDecimal weight;
 
-
-
 }

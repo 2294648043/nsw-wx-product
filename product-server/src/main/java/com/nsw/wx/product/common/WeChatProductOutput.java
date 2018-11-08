@@ -1,5 +1,6 @@
 package com.nsw.wx.product.common;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,6 +11,7 @@ import java.math.BigDecimal;
  */
 @Data
 public class WeChatProductOutput {
+    /**商品id*/
     private Integer id;
 
     /** 标题. */
@@ -31,5 +33,15 @@ public class WeChatProductOutput {
     private Integer productStatus;
 
     /** 类目编号. */
-    private Integer producttype;
+    private Integer columnid;
+    /**图片*/
+
+    private String photopath;
+    /**销售量*/
+    private Integer salesvolume;
+     /**购买数量*/
+    private Integer num;
+    /**
+    产品id(供购物车使用)*/
+    private Integer productid;
 }

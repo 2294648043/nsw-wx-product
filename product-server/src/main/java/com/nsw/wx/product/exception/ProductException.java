@@ -1,11 +1,12 @@
 package com.nsw.wx.product.exception;
 
 
-import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
+import com.nsw.wx.product.enums.ResultEnum;
 
 /**
- * Created by 廖师兄
- * 2017-12-10 22:59
+ * 张维维
+ * 2018-10-25 20:59
+import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
  */
 public class ProductException extends RuntimeException {
 

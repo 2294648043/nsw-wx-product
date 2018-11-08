@@ -1,15 +1,20 @@
 package com.nsw.wx.product.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
+//import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.nsw.wx.product.enums.ResultEnum;
 import com.nsw.wx.product.common.DecreaseStockInput;
 import com.nsw.wx.product.common.WeChatProductOutput;
 import com.nsw.wx.product.exception.ProductException;
 import com.nsw.wx.product.mapper.WeChatProductMapper;
 import com.nsw.wx.product.pojo.TbWeChatProduct;
+import com.nsw.wx.product.redis.RedisService;
+import com.nsw.wx.product.redis.WeChatProductOutputKey;
 import com.nsw.wx.product.server.WeChatProductService;
-//import com.nsw.wx.product.util.JsonUtil;
-//import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,8 +35,11 @@ import java.util.stream.Collectors;
  */
 @Service
 public class WeChatProductServiceImpl implements WeChatProductService {
-    //@Autowired
-    //private AmqpTemplate amqpTemplate;
+
+    @Autowired
+    private RedisService redisService;
+    @Autowired
+    private AmqpTemplate amqpTemplate;
 
     @Autowired
     private WeChatProductMapper weChatProductMapper;
@@ -99,59 +107,33 @@ public class WeChatProductServiceImpl implements WeChatProductService {
      */
     @Override
     public void decreaseStock(List<DecreaseStockInput> decreaseStockInputList) {
-        List<TbWeChatProduct> tbWeChatProducts = decreaseStockProcess(decreaseStockInputList);
-        //发送mq消息
-        List<WeChatProductOutput> productInfoOutputList = tbWeChatProducts.stream().map(e -> {
-            WeChatProductOutput output = new WeChatProductOutput();
-            BeanUtils.copyProperties(e, output);
-            return output;
-        }).collect(Collectors.toList());
-        //System.out.println(JsonUtil.toJson("===="+productInfoOutputList));
-        //amqpTemplate.convertAndSend("productInfo2", JsonUtil.toJson(productInfoOutputList));
 
     }
 
-    /**
-     * 加库存
-     * @param decreaseStockInputList
-     */
-    @Override
-    public void addStock(List<DecreaseStockInput> decreaseStockInputList) {
-        List<TbWeChatProduct> tbWeChatProducts = addstock(decreaseStockInputList);
-        //发送mq消息
-        List<WeChatProductOutput> productInfoOutputList = tbWeChatProducts.stream().map(e -> {
-            WeChatProductOutput output = new WeChatProductOutput();
-            BeanUtils.copyProperties(e, output);
-            return output;
-        }).collect(Collectors.toList());
-        //amqpTemplate.convertAndSend("productInfo2", JsonUtil.toJson(productInfoOutputList));
-    }
 
     /**
      * 退单(加库存)
      * @param decreaseStockInputList
      */
     @Transactional
-    public List<TbWeChatProduct> addstock(List<DecreaseStockInput> decreaseStockInputList) {
+    public Boolean addstock(List<DecreaseStockInput> decreaseStockInputList) {
         List<TbWeChatProduct> productInfoListadd = new ArrayList<>();
         for (DecreaseStockInput decreaseStockInput: decreaseStockInputList) {
-            Integer productIdList = Integer.parseInt(decreaseStockInput.getProductId());
-            TbWeChatProduct productInfo = weChatProductMapper.findById(productIdList);
+            WeChatProductOutput weChatProductOutput = redisService.get(WeChatProductOutputKey.getById, "" + decreaseStockInput.getProductId(), WeChatProductOutput.class);
+            System.out.println("脑瓜同");
             //判断商品是否存在
-            if (productInfo == null){
+            if (weChatProductOutput == null){
                 throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-            // TbWeChatProduct productInfo = productInfoOptional.get();
-            //库存是否足够
-            Integer result = productInfo.getStock() + decreaseStockInput.getProductQuantity();
-
-            //把减过的库存字段赋值
-            productInfo.setStock(result);
-            //修改库存信息
-            weChatProductMapper.updateWeChatProduct(productInfo);
-            productInfoListadd.add(productInfo);
+            weChatProductOutput.setStock(weChatProductOutput.getStock() + decreaseStockInput.getNum());
+            redisService.set(WeChatProductOutputKey.getById, "" + weChatProductOutput.getId(), weChatProductOutput);
+            System.out.println("*****"+weChatProductOutput.getId()+weChatProductOutput.getStock());
+            int count =  weChatProductMapper.SellupdateWeChatProduct(weChatProductOutput.getId(),weChatProductOutput.getStock());
+            if (count<1){
+                throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
+            }
         }
-        return productInfoListadd;
+        return true;
     }
     /**
      * 下单用（扣库存）
@@ -162,24 +144,27 @@ public class WeChatProductServiceImpl implements WeChatProductService {
     public List<TbWeChatProduct> decreaseStockProcess(List<DecreaseStockInput> decreaseStockInputList) {
         List<TbWeChatProduct> productInfoList = new ArrayList<>();
         for (DecreaseStockInput decreaseStockInput: decreaseStockInputList) {
-            System.out.println(decreaseStockInput.getProductId()+"----------------------------");
             Integer productIdList = Integer.parseInt(decreaseStockInput.getProductId());
             TbWeChatProduct productInfo = weChatProductMapper.findById(productIdList);
             //判断商品是否存在
             if (productInfo == null){
                 throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
             }
-            // TbWeChatProduct productInfo = productInfoOptional.get();
+           // TbWeChatProduct productInfo = productInfoOptional.get();
             //库存是否足够
-            Integer result = productInfo.getStock() - decreaseStockInput.getProductQuantity();
-            if (result < 0) {
+            Integer result = productInfo.getStock() - decreaseStockInput.getNum();
+            if (result <0) {
+
                 throw new ProductException(ResultEnum.PRODUCT_STOCK_ERROR);
             }
             //把减过的库存字段赋值
             productInfo.setStock(result);
             //修改库存信息
-            weChatProductMapper.updateWeChatProduct(productInfo);
-            productInfoList.add(productInfo);
+           int count =  weChatProductMapper.updateWeChatProduct(productInfo);
+           if(count<1){
+               throw new ProductException(ResultEnum.PRODUCT_STOCK_UPDATE);
+           }
+           productInfoList.add(productInfo);
         }
         return productInfoList;
     }
@@ -190,7 +175,7 @@ public class WeChatProductServiceImpl implements WeChatProductService {
      * @param productIdList
      * @return
      */
-    public TbWeChatProduct findById( Integer productIdList){
+   public TbWeChatProduct findById( Integer productIdList){
         return weChatProductMapper.findById(productIdList);
     }
 
@@ -204,6 +189,20 @@ public class WeChatProductServiceImpl implements WeChatProductService {
         if (weChatProductMapper.findById(id)==null){
             throw new ProductException(ResultEnum.PRODUCT_NOT_EXIST);
         }
+//        //要删除的用户订单产品
+//        TbWeChatProduct  Tb= weChatProductMapper.findById(id);
+//        System.out.println("//查询次产品库存信息"+Tb);
+//        //查询次产品库存信息
+//        TbWeChatProduct  TbX= weChatProductMapper.findByTitle(Tb.getTitle());
+//        System.out.println("//查询次产品库存信息"+TbX);
+//        //实例化一个对象
+//        TbWeChatProduct  tbWeChatProduct=new TbWeChatProduct();
+//        //删除购物车产品，原产品加库存
+//        tbWeChatProduct.setNum(TbX.getNum()+Tb.getNum());
+//        tbWeChatProduct.setId(TbX.getId());
+//        if(weChatProductMapper.updateWeChatProduct(tbWeChatProduct)>1){
+//            System.out.println("修改成功");
+//        }
         return weChatProductMapper.deleteByPrimaryKey(id);
     }
 
@@ -233,9 +232,8 @@ public class WeChatProductServiceImpl implements WeChatProductService {
      */
     @Override
     public int updateWeChatProduct(TbWeChatProduct record) {
-        //修改前确认是否已经存在这个产品
+          //修改前确认是否已经存在这个产品
         TbWeChatProduct updateWeChatProduct =weChatProductMapper.findByTitle(record.getTitle());
-        System.out.println("检验成功");
         if(updateWeChatProduct != null){
             //已存在本标题的产品
             throw new ProductException(ResultEnum.PRODUCT_EXIST);
@@ -280,5 +278,54 @@ public class WeChatProductServiceImpl implements WeChatProductService {
     @Override
     public TbWeChatProduct findByTitle(String title) {
         return weChatProductMapper.findByTitle(title);
+    }
+
+    /**
+     * 产品查询
+     * @return
+     */
+    @Override
+    public List<TbWeChatProduct> isBestlist() {
+        return weChatProductMapper.isBestlist();
+    }
+
+    /**
+     * 用户添加产品到购物车
+     * @param
+     * @return
+     */
+    @Override
+    public int UseraddTbWeChatProduct(int openid ,int id,String num){
+        TbWeChatProduct  Tb= weChatProductMapper.findById(id);
+        Tb.setOpenid(openid);
+        Tb.setProductid(id);
+        if(num ==null||num==""){
+            Tb.setNum(1);
+        }else{
+            Tb.setNum(Integer.parseInt(num));
+        }
+        return weChatProductMapper.addTbWeChatProduct(Tb);
+    }
+
+    /**
+     * 用户根据openid查询产品（购物车信息）
+     * @param openid
+     * @return
+     */
+    @Override
+    public  List<TbWeChatProduct> findByIdUser(Integer openid){
+        System.out.println("+++++++++++++++++"+weChatProductMapper.findByIdUser(openid));
+        return weChatProductMapper.findByIdUser(openid);
+    }
+
+    @Override
+    public List<WeChatProductOutput> findByproductid(List<String> productIdList) {
+        return weChatProductMapper.findList(productIdList).stream()
+                .map(e -> {
+                    WeChatProductOutput output = new WeChatProductOutput();
+                    BeanUtils.copyProperties(e, output);
+                    return output;
+                })
+                .collect(Collectors.toList());
     }
 }
