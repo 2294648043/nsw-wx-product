@@ -1,49 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c89720b0-583d-44ce-acf5-0022c48c123c" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/MainConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/enums/ProductStatusEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/enums/ResultEnum.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/DecreaseStockInputReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/MQConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/RabbitOrderSender.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/RabbitReceiver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/TakeStock.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/rabbitmq/erduceStockReceover.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/BasePrefix.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/GoodsKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/KeyPrefix.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/MiaoshaKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/MiaoshaUserKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/OrderKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/RedisConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/RedisPoolFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/RedisService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/UserKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/WeChatProductOutputKey.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/util/FastJsonConvertUtil.java" afterDir="false" />
+    <list default="true" id="c89720b0-583d-44ce-acf5-0022c48c123c" name="Default" comment="Merge remote-tracking branch 'remotes/origin/KXZ'&#10;&#10;# Conflicts:&#10;#&#9;product-server/pom.xml&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductColumnVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/WeChatProductColumn.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java&#10;#&#9;product-server/src/main/resources/bootstrap.yml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductColumnMapper.xml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductMapper.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nsw-wx-product.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/ProductServerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/ProductServerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/resources/bootstrap.yml" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/resources/bootstrap.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/product-server/src/main/resources/mapping/WeChatProductMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/product-server/src/main/resources/mapping/WeChatProductMapper.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/product-server/target/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -157,8 +116,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="159">
-              <caret line="139" column="14" lean-forward="true" selection-start-line="139" selection-start-column="14" selection-end-line="139" selection-end-column="14" />
+            <state relative-caret-position="284">
+              <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -334,8 +293,7 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-25" />
-    <option name="y" value="43" />
+    <option name="x" value="8" />
     <option name="width" value="1366" />
     <option name="height" value="768" />
   </component>
@@ -387,43 +345,6 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="product" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="nsw-wx-product" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nsw-wx-product" type="462c0819:PsiDirectoryNode" />
-              <item name="product-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nsw-wx-product" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nsw-wx-product" type="462c0819:PsiDirectoryNode" />
-              <item name="product-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-              <item name="VO" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nsw-wx-product" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nsw-wx-product" type="462c0819:PsiDirectoryNode" />
-              <item name="product-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nsw-wx-product" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nsw-wx-product" type="462c0819:PsiDirectoryNode" />
-              <item name="product-server" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="mapping" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -439,11 +360,12 @@
     <property name="RequestMappingsPanelWidth1" value="75" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541665183296" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/99999/99999/nsw-wx-order" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541665724599" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/99999/99999/nsw-wx-product" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -564,8 +486,23 @@
       <workItem from="1541502481689" duration="2525000" />
       <workItem from="1541551585041" duration="13418000" />
       <workItem from="1541637993562" duration="3792000" />
-      <workItem from="1541644893049" duration="6513000" />
+      <workItem from="1541644893049" duration="7048000" />
     </task>
+    <task id="LOCAL-00001" summary="Merge remote-tracking branch 'remotes/origin/KXZ'&#10;&#10;# Conflicts:&#10;#&#9;product-server/pom.xml&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductColumnVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/WeChatProductColumn.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java&#10;#&#9;product-server/src/main/resources/bootstrap.yml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductColumnMapper.xml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductMapper.xml">
+      <created>1541665157836</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1541665157836</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Merge remote-tracking branch 'remotes/origin/KXZ'&#10;&#10;# Conflicts:&#10;#&#9;product-server/pom.xml&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductColumnVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/WeChatProductColumn.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java&#10;#&#9;product-server/src/main/resources/bootstrap.yml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductColumnMapper.xml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductMapper.xml">
+      <created>1541665223012</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1541665223012</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -580,7 +517,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="114396000" />
+    <option name="totallyTimeSpent" value="114931000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -593,9 +530,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="784" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.32980332" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32980332" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -605,7 +541,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.6048387" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.036923077" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.036923077" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.46153846" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -635,6 +571,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Merge remote-tracking branch 'remotes/origin/KXZ'&#10;&#10;# Conflicts:&#10;#&#9;product-server/pom.xml&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductColumnVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/WeChatProductColumn.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java&#10;#&#9;product-server/src/main/resources/bootstrap.yml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductColumnMapper.xml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductMapper.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'remotes/origin/KXZ'&#10;&#10;# Conflicts:&#10;#&#9;product-server/pom.xml&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/ResultVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductColumnVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/VO/WeChatProductVO.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/DecreaseStockInput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/common/WeChatProductOutput.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductController.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/exception/ProductException.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductColumnMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/mapper/WeChatProductMapper.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/TbWeChatProduct.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/pojo/WeChatProductColumn.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductColumnService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/WeChatProductService.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductColumnServiceImpl.java&#10;#&#9;product-server/src/main/java/com/nsw/wx/product/server/impl/WeChatProductServiceImpl.java&#10;#&#9;product-server/src/main/resources/bootstrap.yml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductColumnMapper.xml&#10;#&#9;product-server/src/main/resources/mapping/WeChatProductMapper.xml" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/nsw-wx-product.iml" />
@@ -818,6 +758,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2175">
           <caret line="104" column="47" selection-start-line="104" selection-start-column="47" selection-end-line="104" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -845,8 +788,8 @@
     <entry file="file://$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/redis/RedisService(1).java" />
     <entry file="file://$PROJECT_DIR$/product-server/src/main/java/com/nsw/wx/product/controller/WeChatProductColumnController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="139" column="14" lean-forward="true" selection-start-line="139" selection-start-column="14" selection-end-line="139" selection-end-column="14" />
+        <state relative-caret-position="284">
+          <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
