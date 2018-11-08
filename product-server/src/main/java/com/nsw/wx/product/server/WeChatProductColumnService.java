@@ -35,14 +35,8 @@ public interface WeChatProductColumnService {
      * @param id
      * @return
      */
-    int deleteByPrimaryKey(Integer id,String photopath);
+    int deleteByPrimaryKey(Integer id);
 
-
-    /**
-     * 显示全部产品分类
-     * @return
-     */
-    List<WeChatProductColumn> Allproductcolumn();
 
     /**
      * 添加产品分类信息
@@ -85,4 +79,9 @@ public interface WeChatProductColumnService {
      * @return
      */
     List<WeChatProductColumn> SelTitle(Integer enterpriseid);
+    /**
+     * 显示全部产品分类
+     * @return
+     */
+    List<WeChatProductColumn> Allproductcolumn();
 }

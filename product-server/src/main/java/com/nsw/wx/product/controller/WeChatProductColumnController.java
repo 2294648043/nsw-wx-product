@@ -30,6 +30,21 @@ import java.util.Map;
  * （商家）
  * 后台产品分类
  */
+import com.nsw.wx.product.util.ResultVOUtil;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+
+/**（商家）
+ * 后台产品分类
+ */
 @MultipartConfig
 @RestController
 @RequestMapping("/api/productcloumn/")
@@ -39,7 +54,6 @@ public class WeChatProductColumnController {
 
     /**
      * 产品分类分页展示
-     *
      * @param page
      * @param limit
      * @param enterpriseid

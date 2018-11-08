@@ -6,6 +6,10 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
+import com.nsw.wx.product.common.DecreaseStockInput;
+import com.nsw.wx.product.pojo.TbWeChatProduct;
+import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
 /**
  * @program: nsw-wx-product
@@ -74,6 +78,15 @@ public interface WeChatProductMapper {
      * @return
      */
     int updateWeChatProduct(TbWeChatProduct record);
+
+    /**
+     * 修改库存
+     * @param id
+     * @param stock
+     * @return
+     */
+    int SellupdateWeChatProduct(@Param("id")Integer id ,
+                                @Param("stock")Integer stock);
     /**
      * 根据分类id的columnid查询
      * @param
@@ -88,4 +101,26 @@ public interface WeChatProductMapper {
      * @return
      */
     TbWeChatProduct findByTitle(String title);
+
+    /**
+     * 查询产品展示到页面
+     * @return
+     */
+    List<TbWeChatProduct> isBestlist();
+
+    /**（用户）
+     * 根据openid查询商品（购物车）
+     * @param
+     * @return
+     */
+    List<TbWeChatProduct> findByIdUser(@Param("openid") Integer openid);
+
+
+    /**
+     * 查询商品列表
+     * @param
+     * @return
+     */
+    List<TbWeChatProduct> findByproductid(List<String> productIdList);
+
 }

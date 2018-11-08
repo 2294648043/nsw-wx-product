@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.github.pagehelper.util.StringUtil;
 import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
+/*import com.nsw.wx.product.enums.ResultEnum;*/
 import com.nsw.wx.product.exception.ProductException;
 import com.nsw.wx.product.mapper.WeChatProductColumnMapper;
 import com.nsw.wx.product.mapper.WeChatProductMapper;
@@ -44,7 +45,6 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
 
     /**
      * 查询登录企业显示产品分类信息
-     *
      * @param enterpriseid
      * @return
      */
@@ -55,7 +55,6 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
 
     /**
      * 分页显示产品分类信息
-     *
      * @param page
      * @param pageSize
      * @param enterpriseid
@@ -63,15 +62,18 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
      */
     @Override
     public PageInfo<WeChatProductColumn> pageSelect(int page, int pageSize, String enterpriseid) {
-        PageHelper.startPage(page, pageSize);
+        PageHelper.startPage(page,pageSize);
         List<WeChatProductColumn> findlist = weChatProductColumnMapper.findAllproductcolumn(enterpriseid);
-        PageInfo<WeChatProductColumn> pageInfoProductList = new PageInfo<WeChatProductColumn>(findlist);
+        PageInfo<WeChatProductColumn> pageInfoProductList =  new PageInfo<WeChatProductColumn>(findlist);
         return pageInfoProductList;
     }
 
     /**
      * 根据id删除产品分类信息
+<<<<<<< HEAD
      *
+=======
+>>>>>>> remotes/origin/KXZ
      * @param id
      * @return
      */
@@ -95,36 +97,22 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
     }
 
     /**
-     * 显示全部产品分类
-     *
-     * @return
-     */
-    @Override
-    public List<WeChatProductColumn> Allproductcolumn() {
-        return weChatProductColumnMapper.Allproductcolumn();
-    }
-
-    /**
      * 添加产品分类信息
-     *
      * @param record
      * @return
      */
     @Override
     public int insertWeChatProductColumn(WeChatProductColumn record) {
         //添加前确认是否已经包含有要添加的类目
-        if (weChatProductColumnMapper.findByTitle(record.getTitle()) != null) {
-            return 0;
-        } else {
-            record.setInputtime(new Date());
-            return weChatProductColumnMapper.insertWeChatProductColumn(record);
+        WeChatProductColumn updateWeChatProductColumn=weChatProductColumnMapper.findByTitle(record.getTitle());
+        if(weChatProductColumnMapper.findByTitle(record.getTitle()) != null){
+            throw new ProductException(ResultEnum.PRODUCT_EXIST);
         }
+        return weChatProductColumnMapper.insertWeChatProductColumn(record);
     }
-
 
     /**
      * 查询产品分类详细信息
-     *
      * @param id
      * @return
      */
@@ -135,7 +123,6 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
 
     /**
      * 修改产品分类详细信息
-     *
      * @param record
      * @return
      */
@@ -157,7 +144,10 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
 
     /**
      * 根据产品分类标题查询
+<<<<<<< HEAD
      *
+=======
+>>>>>>> remotes/origin/KXZ
      * @param title
      * @return
      */
@@ -211,4 +201,14 @@ public class WeChatProductColumnServiceImpl implements WeChatProductColumnServic
 
         return weChatProductColumnMapper.SelTitle(enterpriseid);
     }
+    /**
+     * 显示全部产品分类
+     * @return
+     */
+    @Override
+    public List<WeChatProductColumn> Allproductcolumn() {
+        return weChatProductColumnMapper.Allproductcolumn();
+    }
+
+
 }
