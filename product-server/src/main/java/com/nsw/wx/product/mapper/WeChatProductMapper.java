@@ -3,13 +3,8 @@ package com.nsw.wx.product.mapper;
 import com.nsw.wx.product.common.DecreaseStockInput;
 import com.nsw.wx.product.pojo.TbWeChatProduct;
 import org.apache.ibatis.annotations.Param;
+import java.util.List;
 
-import java.util.List;
-import java.util.Optional;
-import com.nsw.wx.product.common.DecreaseStockInput;
-import com.nsw.wx.product.pojo.TbWeChatProduct;
-import org.apache.ibatis.annotations.Param;
-import java.util.List;
 
 /**
  * @program: nsw-wx-product

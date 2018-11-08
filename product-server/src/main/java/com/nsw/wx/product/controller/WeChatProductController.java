@@ -8,33 +8,20 @@ import com.nsw.wx.product.common.DecreaseStockInput;
 import com.nsw.wx.product.common.WeChatProductOutput;
 import com.nsw.wx.product.pojo.TbWeChatProduct;
 import com.nsw.wx.product.pojo.WeChatProductColumn;
+import com.nsw.wx.product.redis.RedisService;
 import com.nsw.wx.product.server.WeChatProductColumnService;
 import com.nsw.wx.product.server.WeChatProductService;
 import com.nsw.wx.product.util.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import com.nsw.wx.product.enums.ResultEnum;
-import com.nsw.wx.product.common.DecreaseStockInput;
-import com.nsw.wx.product.common.WeChatProductOutput;
 import com.nsw.wx.product.exception.ProductException;
-import com.nsw.wx.product.pojo.TbWeChatProduct;
-import com.nsw.wx.product.pojo.WeChatProductColumn;
-import com.nsw.wx.product.redis.RedisService;
 import com.nsw.wx.product.redis.WeChatProductOutputKey;
-import com.nsw.wx.product.server.WeChatProductColumnService;
-import com.nsw.wx.product.server.WeChatProductService;
 import com.nsw.wx.product.util.ResultVOUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -47,7 +34,7 @@ import java.util.stream.Collectors;
  **/
 @RestController
 @RequestMapping("/api/product")
-public class WeChatProductController implements InitializingBean {
+public class WeChatProductController  {
 
     @Autowired
     private RedisService redisService;
@@ -64,8 +51,7 @@ public class WeChatProductController implements InitializingBean {
      * 4. 构造数据
      */
     @RequestMapping("/list")
-        public String list(HttpServletResponse response, Model model) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        public String list( Model model) {
             //1. 查询所有在架的商品
             List<TbWeChatProduct> productInfoList = weChatProductService.findUpAll();
            System.out.println(productInfoList);
@@ -104,8 +90,7 @@ public class WeChatProductController implements InitializingBean {
      * @return
      */
     @PostMapping("/listForOrder")
-    public List<WeChatProductOutput> listForOrder(HttpServletResponse response,@RequestBody List<String> productIdList) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public List<WeChatProductOutput> listForOrder(@RequestBody List<String> productIdList) {
         //return weChatProductService.findList(productIdList);
         return weChatProductService.findByproductid(productIdList);
     }
@@ -116,8 +101,7 @@ public class WeChatProductController implements InitializingBean {
      * @param decreaseStockInputList
      */
     @PostMapping("/decreaseStock")
-    public void decreaseStock(HttpServletResponse response,@RequestBody List<DecreaseStockInput> decreaseStockInputList){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public void decreaseStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList){
         weChatProductService.decreaseStock(decreaseStockInputList);
     }
     /**
@@ -125,8 +109,7 @@ public class WeChatProductController implements InitializingBean {
      * @param decreaseStockInputList
      */
     @PostMapping("/addStock")
-    public void addStock(HttpServletResponse response,@RequestBody List<DecreaseStockInput> decreaseStockInputList){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public void addStock(@RequestBody List<DecreaseStockInput> decreaseStockInputList){
        // weChatProductService.decreaseStock(decreaseStockInputList);
         weChatProductService.addstock(decreaseStockInputList);
     }
@@ -135,18 +118,16 @@ public class WeChatProductController implements InitializingBean {
      * 商家分页显示产品可根据是否上下架显示
      * @param page
      * @param limit
-     * @param enterpriseid
      * @param productstatus
      * @return
      */
     @RequestMapping("/listproduct")
-    public Object listproduct(HttpServletResponse response,
-                              @RequestParam(value = "page",required = false) String page,
+    public Object listproduct(HttpServletRequest request,
+                                @RequestParam(value = "page",required = false) String page,
                               @RequestParam(value = "limit",required = false) String limit,
-                              @RequestParam(value = "enterpriseid",required = false) String enterpriseid,
-                              @RequestParam(value = "productstatus",required = false) String productstatus
-                              ){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+                              @RequestParam(value = "productstatus",required = false) String productstatus){
+        String token =request.getHeader("token");
+        String enterpriseid =  redisService.get(token);
         PageInfo<TbWeChatProduct> pageInfoList = weChatProductService.pageSelect(
         Integer.parseInt(page),Integer.parseInt(limit),enterpriseid,productstatus);
         List<TbWeChatProduct> productInfoList = pageInfoList.getList();
@@ -168,8 +149,7 @@ public class WeChatProductController implements InitializingBean {
      * @return
      */
     @RequestMapping("selectidoneid")
-    public Object selectidoneid(HttpServletResponse response,@RequestParam(value = "id",required = false) String id){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object selectidoneid(@RequestParam(value = "id",required = false) String id){
         TbWeChatProduct tb=weChatProductService.findById(Integer.parseInt(id));
         return weChatProductService.findById(Integer.parseInt(id));
     }
@@ -181,42 +161,36 @@ public class WeChatProductController implements InitializingBean {
      * @return
      */
     @RequestMapping("deleteproductid")
-    public Object deleteproduct(HttpServletResponse response,@RequestParam("id") int id){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object deleteproduct(@RequestParam("id") int id){
         return ResultVOUtil.success(weChatProductService.deleteByPrimaryKey(id));
     }
     //@RequestBody
 
     /**
      * 增加方法
-     * @param response
      * @param json_str
      * @return
      */
-    @RequestMapping("addproduct")
-    public Object addproduct(HttpServletResponse response,@RequestBody String json_str){
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println("json_str========"+json_str);
+    @RequestMapping("add")
+    public Object addproduct(@RequestBody String json_str, HttpServletRequest request){
         TbWeChatProduct weChatProduct =   new JsonMap().string2Obj(json_str,new TbWeChatProduct().getClass());
-        System.out.println("++++"+weChatProduct.toString());
-       int count =  weChatProductService.addTbWeChatProduct(weChatProduct);
+        String token =request.getHeader("token");
+        Integer enterpriseid =  Integer.parseInt(redisService.get(token));
+        weChatProduct.setEnterpriseid(enterpriseid);
+        int count =  weChatProductService.addTbWeChatProduct(weChatProduct);
         return count;
     }
 
     @RequestMapping("update")
-    public Object update(HttpServletResponse response,TbWeChatProduct tbWeChatProduct){
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "*");
+    public Object update(TbWeChatProduct tbWeChatProduct){
         int count=weChatProductService.updateWeChatProduct(tbWeChatProduct);
         System.out.println("--------->"+count);
         return count;
     }
 
     @RequestMapping("update111")
-    public Object update111(HttpServletResponse response,@RequestBody String json_str
+    public Object update111(@RequestBody String json_str
             ,@RequestParam(value = "photopath",required = false) String photopath){
-        response.setHeader("Access-Control-Allow-Origin", "*");
         System.out.println("---------------->"+json_str);
         TbWeChatProduct tbWeChatProduct = new JsonMap().string2Obj(json_str,new TbWeChatProduct().getClass());
         int count = weChatProductService.updateWeChatProduct11(tbWeChatProduct,photopath);
@@ -226,8 +200,7 @@ public class WeChatProductController implements InitializingBean {
     }
 
     @RequestMapping("addproduct")
-    public Object addproduct(HttpServletResponse response,@RequestBody TbWeChatProduct tbWeChatProduct){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object addproduct(@RequestBody TbWeChatProduct tbWeChatProduct){
         TbWeChatProduct tb=weChatProductService.findById(6);
         return weChatProductService.addTbWeChatProduct(tb);
     }
@@ -253,12 +226,10 @@ public class WeChatProductController implements InitializingBean {
 
     /**
      *查询产品（isbest最好的）
-     * @param response
      * @return
      */
     @RequestMapping("iBest")
-    public Object iBest(HttpServletResponse response){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object iBest(){
         System.out.println(weChatProductService.isBestlist());
         List<TbWeChatProduct> productInfoList=weChatProductService.isBestlist();
         List<WeChatProductOutput> productInfoVOList = new ArrayList<>();
@@ -272,15 +243,13 @@ public class WeChatProductController implements InitializingBean {
 
     /**
      * 添加到购物车（用户）
-     * @param response
      * @param openid
      * @param id
      * @return
      */
     @RequestMapping("useraddproduct")
-    public Object useraddproduct(HttpServletResponse response,@RequestParam("openid") int openid,@RequestParam("id") int id,
+    public Object useraddproduct(@RequestParam("openid") int openid,@RequestParam("id") int id,
                                  @RequestParam( value = "num",required = false) String num){
-        response.setHeader("Access-Control-Allow-Origin", "*");
         return weChatProductService.UseraddTbWeChatProduct(openid,id,num);
     }
     /**
@@ -290,8 +259,7 @@ public class WeChatProductController implements InitializingBean {
      * @return
      */
     @RequestMapping("selectiduser")
-    public Object userselectidopenid(HttpServletResponse response,@RequestParam(value = "openid",required = false) int openid){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object userselectidopenid(@RequestParam(value = "openid",required = false) int openid){
         List<TbWeChatProduct> tb=weChatProductService.findByIdUser(openid);
         List<WeChatProductOutput> productInfoVOList =new ArrayList<>();
         for (TbWeChatProduct productInfo : tb){
@@ -303,8 +271,7 @@ public class WeChatProductController implements InitializingBean {
     }
 
     @RequestMapping("selectone")
-    public Object selectone(HttpServletResponse response,@RequestParam(value = "id") String id){
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object selectone(@RequestParam(value = "id") String id){
         WeChatProductOutput weChatProductOutput = redisService.get(WeChatProductOutputKey.getById, "" + id, WeChatProductOutput.class);
         return weChatProductOutput;
     }

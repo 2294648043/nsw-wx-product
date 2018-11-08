@@ -1,10 +1,6 @@
 package com.nsw.wx.product.server.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-//import com.nsw.wx.product.com.nsw.wx.enums.ResultEnum;
-
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.nsw.wx.product.enums.ResultEnum;
 import com.nsw.wx.product.common.DecreaseStockInput;
 import com.nsw.wx.product.common.WeChatProductOutput;
@@ -214,7 +210,7 @@ public class WeChatProductServiceImpl implements WeChatProductService {
     @Override
     public int addTbWeChatProduct(TbWeChatProduct record) {
         //添加前确认是否已经有了这个产品
-        record.setEnterpriseid(248);
+       // record.setEnterpriseid(248);
         record.setInputtime(new Date());
         record.setEndtime(new Date());
         TbWeChatProduct updateWeChatProduct =weChatProductMapper.findByTitle(record.getTitle());

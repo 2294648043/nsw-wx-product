@@ -1,46 +1,29 @@
 package com.nsw.wx.product.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.nsw.wx.product.VO.WeChatProductColumnVO;
 import com.nsw.wx.product.pojo.WeChatProductColumn;
+import com.nsw.wx.product.redis.RedisService;
 import com.nsw.wx.product.server.WeChatProductColumnService;
 import com.nsw.wx.product.util.JsonData;
 import com.nsw.wx.product.util.JsonMap;
 import com.nsw.wx.product.util.ResultVOUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-/**
- * （商家）
- * 后台产品分类
- */
-import com.nsw.wx.product.util.ResultVOUtil;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 /**（商家）
  * 后台产品分类
@@ -51,20 +34,20 @@ import java.util.List;
 public class WeChatProductColumnController {
     @Autowired
     private WeChatProductColumnService weChatProductColumnService;
-
+    @Autowired
+    private RedisService redisService;
     /**
      * 产品分类分页展示
      * @param page
      * @param limit
-     * @param enterpriseid
      * @return
      */
     @RequestMapping("list")
-    public Object productColumn(HttpServletResponse response, @RequestParam(value = "page", required = false) String page,
-                                @RequestParam(value = "limit", required = false) String limit,
-                                @RequestParam(value = "enterpriseid", required = false) String enterpriseid) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        System.out.println(page + "================" + limit + "++++++++++++" + enterpriseid);
+    public Object productColumn(HttpServletRequest request,
+                                @RequestParam(value = "page", required = false) String page,
+                                @RequestParam(value = "limit", required = false) String limit) {
+        String token =request.getHeader("token");
+        String enterpriseid =  redisService.get(token);
         PageInfo<WeChatProductColumn> pageInfoList = weChatProductColumnService.pageSelect(
                 Integer.parseInt(page), Integer.parseInt(limit), enterpriseid);
         List<WeChatProductColumn> productInfoList = pageInfoList.getList();
@@ -85,11 +68,9 @@ public class WeChatProductColumnController {
      * @return
      */
     @RequestMapping("listcolumn")
-    public Object productColumnlist(HttpServletResponse response,
-                                    @RequestParam(value = "page") String page,
+    public Object productColumnlist(@RequestParam(value = "page") String page,
                                     @RequestParam(value = "limit") String limit,
                                     @RequestParam(value = "enterpriseid",required = false) String enterpriseid) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
         PageInfo<WeChatProductColumn> pageInfoList = weChatProductColumnService.pageSelect(
         Integer.parseInt(page),Integer.parseInt(limit),enterpriseid);
         List<WeChatProductColumn> productInfoList = pageInfoList.getList();
@@ -105,8 +86,7 @@ public class WeChatProductColumnController {
 
 
     @RequestMapping("selectid")
-    public Object selectid(HttpServletResponse response, @RequestParam("id") int id) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object selectid( @RequestParam("id") int id) {
         WeChatProductColumn weChatProductColumn = weChatProductColumnService.selectByPrimaryKey(id);
         WeChatProductColumnVO weChatProductColumnVO = new WeChatProductColumnVO();
         BeanUtils.copyProperties(weChatProductColumn, weChatProductColumnVO);
@@ -114,19 +94,18 @@ public class WeChatProductColumnController {
     }
 
     @RequestMapping("deleteid")
-    public Object deleteid(HttpServletResponse response, @RequestParam("id") int id,@RequestParam(value = "photopath",required = false) String photopath) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object deleteid(@RequestParam("id") int id,@RequestParam(value = "photopath",required = false) String photopath) {
         System.out.println("---------->"+photopath);
         return weChatProductColumnService.deleteByPrimaryKey(id,photopath);
     }
 
     @RequestMapping("add")
-    public Object addproductcolumn(HttpServletResponse response, @RequestBody String json_str) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "*");
+    public Object addproductcolumn(@RequestBody String json_str, HttpServletRequest request) {
+        String token =request.getHeader("token");
+        Integer enterpriseid =  Integer.parseInt(redisService.get(token));
         WeChatProductColumn weChatProductColumn = new JsonMap().string2Obj(json_str, new WeChatProductColumn().getClass());
-        weChatProductColumn.setEnterpriseid(248);
+        weChatProductColumn.setInputtime(new Date());
+        weChatProductColumn.setEnterpriseid(enterpriseid);
         weChatProductColumn.setParentid(1);
         int count =weChatProductColumnService.insertWeChatProductColumn(weChatProductColumn);
         System.out.println("------------->"+count);
@@ -135,11 +114,8 @@ public class WeChatProductColumnController {
 
 
     @RequestMapping("update")
-    public Object updateproductcolumn(HttpServletResponse response, @RequestBody String json_str
+    public Object updateproductcolumn(@RequestBody String json_str
                         ,@RequestParam(value = "photopath",required = false) String photopath) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Headers", "*");
-        response.setHeader("Access-Control-Allow-Methods", "*");
         WeChatProductColumn weChatProductColumn = new JsonMap().string2Obj(json_str, new WeChatProductColumn().getClass());
          int count = weChatProductColumnService.updateWeChatProductColumn(weChatProductColumn,photopath);
         return count;
@@ -147,16 +123,14 @@ public class WeChatProductColumnController {
 
     /**
      * 新增
-     * @param response
      * @param
      * @return
      */
     @RequestMapping("selTitle")
-    public Object selTitle(HttpServletResponse response
-            ,@RequestParam(value = "enterpriseid",required = false) Integer enterpriseid) {
-        response.setHeader("Access-Control-Allow-Origin", "*");
+    public Object selTitle(HttpServletRequest request)  {
+        String token =request.getHeader("token");
+        Integer enterpriseid =  Integer.parseInt(redisService.get(token));
         List<WeChatProductColumn> list= weChatProductColumnService.SelTitle(enterpriseid);
-        System.out.println("-------->"+list);
         return list;
     }
     /**
@@ -168,9 +142,7 @@ public class WeChatProductColumnController {
      */
     @RequestMapping(value = "/upload/img", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String, Object> upload(@RequestParam("file") MultipartFile file,HttpServletResponse response) throws IOException {
-        response.setHeader("Access-Control-Allow-Origin", "*");
-
+    public Map<String, Object> upload(@RequestParam("file") MultipartFile file) throws IOException {
         return  weChatProductColumnService.photopath(file);
     }
 
